@@ -12,6 +12,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
     try {
       const user = await login(email, password);
       if (user.role === 'admin') {
@@ -20,7 +21,11 @@ const Login = () => {
         navigate('/vehicles');
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed');
+      if (!err.response) {
+        setError('Login failed: Cannot reach backend server. Make sure the backend is running (npm run dev in backend).');
+      } else {
+        setError(err.response.data?.message || 'Login failed');
+      }
     }
   };
 

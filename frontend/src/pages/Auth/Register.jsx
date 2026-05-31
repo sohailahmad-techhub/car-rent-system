@@ -14,6 +14,7 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
     try {
       const user = await register(name, email, password, role);
       if (user.role === 'admin') {
@@ -22,7 +23,11 @@ const Register = () => {
         navigate('/vehicles');
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed');
+      if (!err.response) {
+        setError('Registration failed: Cannot reach backend server. Make sure the backend is running (npm run dev in backend).');
+      } else {
+        setError(err.response.data?.message || 'Registration failed');
+      }
     }
   };
 
