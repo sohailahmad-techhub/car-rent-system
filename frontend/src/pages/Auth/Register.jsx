@@ -24,7 +24,8 @@ const Register = () => {
       }
     } catch (err) {
       if (!err.response) {
-        setError('Registration failed: Cannot reach backend server. Make sure the backend is running (npm run dev in backend).');
+        const targetUrl = (err.config?.baseURL || '') + (err.config?.url || '');
+        setError(`Registration failed: Cannot reach backend server at "${targetUrl}". Please verify the backend is running and that VITE_API_URL is correctly set in Vercel.`);
       } else {
         setError(err.response.data?.message || 'Registration failed');
       }
