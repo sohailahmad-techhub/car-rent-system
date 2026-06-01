@@ -19,6 +19,11 @@ app.use('/api/vehicles', vehicleRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 
+// Base route
+app.get('/', (req, res) => {
+  res.json({ message: 'Car Rent Management System API is running...' });
+});
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
