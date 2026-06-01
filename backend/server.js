@@ -13,6 +13,23 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Middleware to ensure MongoDB connection is active
+const connectDB = async (req, res, next) => {
+  if (mongoose.connection.readyState === 1) {
+    return next();
+  }
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log('Connected to MongoDB');
+    next();
+  } catch (err) {
+    console.error('Error connecting to MongoDB:', err);
+    res.status(500).json({ message: 'Database connection failed', error: err.message });
+  }
+};
+
+app.use(connectDB);
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/vehicles', vehicleRoutes);
@@ -23,15 +40,6 @@ app.use('/api/dashboard', dashboardRoutes);
 app.get('/', (req, res) => {
   res.json({ message: 'Car Rent Management System API is running...' });
 });
-
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log('Connected to MongoDB');
-  })
-  .catch((err) => {
-    console.error('Error connecting to MongoDB', err);
-  });
 
 const PORT = process.env.PORT || 5000;
 
