@@ -10,6 +10,11 @@ if (!apiURL.endsWith('/api')) {
   apiURL = apiURL + '/api';
 }
 
+// Upgrade http to https for non-localhost/non-IP targets to prevent Mixed Content Block on secure deployments
+if (apiURL.startsWith('http://') && !apiURL.includes('localhost') && !apiURL.includes('127.0.0.1')) {
+  apiURL = apiURL.replace('http://', 'https://');
+}
+
 const instance = axios.create({
   baseURL: apiURL,
 });
