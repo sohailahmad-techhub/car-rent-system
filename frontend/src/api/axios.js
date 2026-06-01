@@ -1,7 +1,17 @@
 import axios from 'axios';
 
+let apiURL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
+// Clean trailing slashes
+apiURL = apiURL.replace(/\/+$/, '');
+
+// Ensure the URL ends with /api
+if (!apiURL.endsWith('/api')) {
+  apiURL = apiURL + '/api';
+}
+
 const instance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  baseURL: apiURL,
 });
 
 instance.interceptors.request.use(
