@@ -49,25 +49,6 @@ A full-stack Car Rent Management System containing a React/Vite frontend and a N
 
 ---
 
-## Vercel Deployment
-
-Deploying both frontend and backend on Vercel from this repository is simple. You will create **two separate projects** in the Vercel Dashboard.
-
-### 1. Deploy the Backend API
-1. Go to the [Vercel Dashboard](https://vercel.com/dashboard) and click **Add New** > **Project**.
-2. Import this GitHub repository (`car-rent-system`).
-3. For **Project Name**, enter `car-rent-system-api` (or similar).
-4. For **Root Directory**, click *Edit* and select the **`backend`** folder.
-5. In **Framework Preset**, leave it as *Other* (it will automatically detect Node.js using the `vercel.json` config).
-6. Under **Environment Variables**, add:
-   - `MONGO_URI` = `your_mongodb_connection_string`
-   - `JWT_SECRET` = `your_jwt_secret`
-7. Click **Deploy**.
-8. Once deployed, copy your backend URL (e.g., `https://car-rent-system-api.vercel.app`).
-
-### 2. Deploy the Frontend
-1. Go back to the Vercel Dashboard, click **Add New** > **Project**.
-2. Import this same GitHub repository (`car-rent-system`).
 3. For **Project Name**, enter `car-rent-system`.
 4. For **Root Directory**, click *Edit* and select the **`frontend`** folder.
 5. In **Framework Preset**, select **Vite** (if it isn't automatically selected).
